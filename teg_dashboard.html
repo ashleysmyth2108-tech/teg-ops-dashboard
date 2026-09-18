@@ -1642,10 +1642,10 @@ function renderDashboard() {
   if (!cbHtml) cbHtml = '<tr><td colspan="6" style="text-align:center;color:var(--subtle);padding:1rem">No callback data</td></tr>';
   document.getElementById('cbBody').innerHTML = cbHtml;
 
-  let cbTeamFilter = 'all';
+   let cbTeamFilter = 'all';
   function renderCallbacks(teamFilter) {
     const cbByWeek = {};
-    (globalData.cbRows || []).forEach(r => {
+    (globalData.cbRows || cbRows || []).forEach(r => {
       const week = r['Week'] || r['week 22'];
       if (!week) return;
       const rowTeam = String(r['Team'] || '').trim();
@@ -1653,8 +1653,8 @@ function renderDashboard() {
       const wk = String(week);
       if (!cbByWeek[wk]) cbByWeek[wk] = { total:0, calledBack:0, notActioned:0, pendingSum:0, pendingCount:0, days:[] };
       const req  = Number(r['Callback req'] || r['Callback requests']) || 0;
-      const cb   = Number(r['Called back']) || 0;
-      const na   = Number(r['Not actioned']) || 0;
+      const cb   = Number(r['Called back'])       || 0;
+      const na   = Number(r['Not actioned'])      || 0;
       const pend = Number(r['Avg pending (mins)']) || 0;
       cbByWeek[wk].total       += req;
       cbByWeek[wk].calledBack  += cb;
